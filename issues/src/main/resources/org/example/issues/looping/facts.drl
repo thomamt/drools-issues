@@ -1,0 +1,9 @@
+package org.example.issues.looping;
+
+import java.math.BigDecimal;
+
+declare MathFact
+	bigDecimal1 : BigDecimal;
+	bigDecimal2 : BigDecimal;
+	bigDecimalResult : BigDecimal;
+end	

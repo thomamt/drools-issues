@@ -1,0 +1,29 @@
+package org.example.issues.looping;
+
+rule "init"
+when
+	not MathFact(  );
+then
+	MathFact fact = new MathFact();
+	fact.setBigDecimal1(BigDecimal.valueOf(10));
+	fact.setBigDecimal2(BigDecimal.valueOf(5));
+	insert(fact);
+end
+
+rule "subtract"
+when
+	$fact : MathFact( bigDecimal1 != null, bigDecimal2 != null );
+then
+	// Causes looping
+	BigDecimal result = 
+		$fact.getBigDecimal1().subtract($fact.getBigDecimal2());
+		
+	// but if done on one line it wouldn't loop:
+	// BigDecimal result = $fact.getBigDecimal1().subtract($fact.getBigDecimal2());
+		
+	System.out.println("\nMathFact.result: " + result);
+ 
+	modify($fact) {
+		setBigDecimalResult(result);
+	};
+end
